@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import sushi3 from '../assets/sushi3.jpg';
 
+
 const WA_NUMBER  = '34600000000';
 const WA_MESSAGE = encodeURIComponent('Hola, me gustaría reservar una mesa en Fuji Museko.');
 const WA_URL     = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
@@ -75,11 +76,11 @@ export default function Reserva() {
           </a>
         </div>
 
-        <div ref={infoRef} className="reveal mt-14 grid grid-cols-3 gap-4 border-t border-white/10 pt-10"
+        <div ref={infoRef} className="reveal mt-14 grid grid-cols-3 gap-2 sm:gap-4 border-t border-white/10 pt-10"
           style={{ transitionDelay: '0.5s' }}>
           {[
             { label: 'Dirección', value: 'Villarreal, Castellón' },
-            { label: 'Horario',   value: 'Mar–Dom · 13–23h'     },
+            { label: 'Horario',   value: '13–16:30 | 20-23h'     },
             { label: 'Reservas',  value: 'WhatsApp'             },
           ].map(({ label, value }) => (
             <div key={label}>

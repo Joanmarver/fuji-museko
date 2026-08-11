@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "INPUT=$(cat); if echo \"$INPUT\" | grep -qiE 'DROP[[:space:]]+TABLE|DROP[[:space:]]+DATABASE|TRUNCATE|rm[[:space:]]+-rf[[:space:]]+/|dotnet[[:space:]]+ef[[:space:]]+database[[:space:]]+update'; then echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Comando peligroso bloqueado. Pide confirmación explícita al usuario.\"}}'; fi",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && BUILD_OUTPUT=$(npm run build 2>&1); BUILD_EXIT=$?; if [ $BUILD_EXIT -eq 0 ]; then echo '{\"systemMessage\":\"✅ Build succeeded.\"}'; else echo \"$BUILD_OUTPUT\" | node -e 'let data=\"\";process.stdin.on(\"data\",d=>data+=d);process.stdin.on(\"end\",()=>{const clean=data.replace(/\\x1b\\[[0-9;]*m/g,\"\");const lines=clean.split(\"\\n\").filter(l=>/error/i.test(l)).slice(0,5).join(\"\\n\");const reason=`Build fallido. Errores:\\n${lines}\\n\\nPregunta al usuario si quiere que investigues el error. NO corrijas nada sin su aprobación.`;console.log(JSON.stringify({decision:\"block\",reason,systemMessage:\"❌ Build failed.\"}));});'; fi",
+            "timeout": 120,
+            "statusMessage": "Building project (npm run build)..."
+          }
+        ]
+      }
+    ]
+  }
+}

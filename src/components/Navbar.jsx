@@ -3,6 +3,7 @@ import logo from '../assets/logo.jpg';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [showLogo, setShowLogo] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -11,15 +12,28 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
+  // Muestra el logo del navbar justo cuando el logo del Hero deja de verse (sin hueco entre ambos)
+  useEffect(() => {
+    const target = document.getElementById('hero-logo');
+    if (!target) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowLogo(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, []);
+
   const go = (id) => { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); setOpen(false); };
 
   return (
     <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-700
-      ${scrolled ? 'bg-black/90 backdrop-blur-xl py-3 border-b border-white/5' : 'bg-transparent py-6'}`}>
+      ${scrolled ? 'bg-black/90 backdrop-blur-xl py-2 md:py-3 border-b border-white/5' : 'bg-transparent py-3 md:py-6'}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
 
-        <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top:0, behavior:'smooth' }); }}>
-          <img src={logo} alt="Fuji Museko" className={`object-contain transition-all duration-500 ${scrolled ? 'h-7' : 'h-9'}`} />
+        <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top:0, behavior:'smooth' }); }}
+          className={`transition-opacity duration-500 md:opacity-100 md:pointer-events-auto ${showLogo ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+          <img src={logo} alt="Fuji Museko" className={`object-contain transition-all duration-500 ${scrolled ? 'h-10 md:h-20' : 'h-14 md:h-28'}`} />
         </a>
 
         {/* Desktop */}

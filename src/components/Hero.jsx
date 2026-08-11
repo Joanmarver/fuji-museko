@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import logo from '../assets/logo.jpg';
-import sushi1 from '../assets/sushi1.jpg';
-import sushi2 from '../assets/sushi2.jpg';
 import sushi3 from '../assets/sushi3.jpg';
+import platoEbi from '../assets/ebiGreen.jpg';
+import nigiri from '../assets/nigirituna.jpg';
+import sake from '../assets/sake.jpg';
+import sashimi from '../assets/sashimi.jpg';
+import carpaccio from '../assets/carpaccio.jpg';
+import takoyaki from '../assets/takoyaki.jpg';
+import magdalena from '../assets/magdalena.jpg';
 
-const IMAGES      = [sushi1, sushi2, sushi3];
+
+const IMAGES      = [ platoEbi, nigiri, sushi3, sake, sashimi, carpaccio, takoyaki, magdalena];
 const DISPLAY_TIME = 5000; // ms entre transiciones
 const FADE_TIME    = 2500; // ms de crossfade
 
@@ -59,8 +65,9 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80 z-10" />
 
       {/* Contenido */}
-      <div className="relative z-20 text-center px-6 flex flex-col items-center">
+      <div className="relative z-20 text-center px-6 flex flex-col items-center -translate-y-20 md:-translate-y-28">
         <img
+          id="hero-logo"
           src={logo}
           alt="Fuji Museko"
           className="fade-in w-56 sm:w-72 md:w-80 object-contain mb-8"
@@ -71,7 +78,7 @@ export default function Hero() {
           className="fade-up text-white/45 text-[10px] font-light tracking-[0.5em] uppercase mb-10"
           style={{ animationDelay: '0.65s' }}
         >
-          Sushi · Villarreal · Vila-real
+          Sushi · Vila-real
         </p>
         <div className="fade-up flex flex-col sm:flex-row gap-4 items-center" style={{ animationDelay: '0.8s' }}>
           <button
