@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { menuCategories, menuItems } from '../data/menu';
+import { allergenCatalog } from '../data/allergens';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import AllergenIcon from './AllergenIcon';
 import bannerImg from '../assets/carpaccio.jpg';
 
 
@@ -8,7 +10,29 @@ const GROUPS = menuCategories.map(c => ({ key: c.key, label: c.label, categories
 
 const LABEL_BY_KEY = Object.fromEntries(menuCategories.map(c => [c.key, c.label]));
 
-function MenuItem({ name, desc, price, badge, delay }) {
+function AllergenIcons({ allergens }) {
+  if (!allergens || allergens.length === 0) return null;
+  return (
+    <span className="flex items-center gap-1.5">
+      {allergens.map((key) => {
+        const info = allergenCatalog[key];
+        if (!info) return null;
+        return (
+          <span
+            key={key}
+            title={info.label}
+            aria-label={info.label}
+            className="flex items-center justify-center w-5 h-5 rounded-full bg-terra/15 text-terra"
+          >
+            <AllergenIcon name={info.icon} className="w-3.5 h-3.5" />
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
+function MenuItem({ name, desc, price, badge, allergens, delay }) {
   const ref = useScrollReveal();
   return (
     <div
@@ -27,6 +51,7 @@ function MenuItem({ name, desc, price, badge, delay }) {
               {badge}
             </span>
           )}
+          <AllergenIcons allergens={allergens} />
         </div>
         <p className="text-white/30 text-xs font-light leading-relaxed">{desc}</p>
       </div>

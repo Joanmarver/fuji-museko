@@ -90,7 +90,7 @@ export default function Hero() {
           </button>
           <button
             onClick={() => go('reserva')}
-            className="border border-white/30 hover:border-white text-white/70 hover:text-white
+            className="border border-white/30 hover:border-terra text-white/70 hover:text-terra
               text-[10px] font-medium tracking-[0.3em] uppercase px-10 py-4
               backdrop-blur-sm transition-all duration-300"
           >

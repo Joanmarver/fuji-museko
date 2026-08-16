@@ -33,10 +33,12 @@ src/
     Navbar.jsx
     Hero.jsx
     Menu.jsx           # renderiza menuCategories / menuItems desde data/menu.js
+    AllergenIcon.jsx   # set de iconos SVG monocromo (stroke=currentColor) para alérgenos
     Reserva.jsx
-    Footer.jsx
+    Footer.jsx         # incluye enlace a Instagram (placeholder, ver más abajo)
   data/
-    menu.js            # fuente de verdad de la carta: categorías + platos + precios
+    menu.js            # fuente de verdad de la carta: categorías + platos + precios + alérgenos
+    allergens.js        # catálogo de alérgenos: { label, icon } por clave
   hooks/
     useScrollReveal.js # hook custom para animaciones al hacer scroll
 carta.xlsx             # carta en Excel (referencia/origen de los datos, no se lee en runtime)
@@ -46,10 +48,23 @@ carta.xlsx             # carta en Excel (referencia/origen de los datos, no se l
 
 Exporta:
 - `menuCategories`: array de `{ key, label }` (pestañas del menú: Nigiris, Rolls, Especiales)
-- `menuItems`: objeto `{ [categoryKey]: Array<{ name, desc, price, badge }> }`
+- `menuItems`: objeto `{ [categoryKey]: Array<{ name, desc, price, badge, allergens? }> }`
 
 `badge` es opcional (`null`, `'Especial'`, `'Chef'`, `'Firma'`, `'Temporada'`...) y se usa
 para destacar platos en la UI. Al editar la carta, mantener esta forma de datos.
+
+`allergens` es opcional: array de claves de `src/data/allergens.js` (`'gluten'`,
+`'crustaceos'`, `'huevo'`, `'pescado'`, `'soja'`, `'lacteos'`, `'frutosSecos'`,
+`'sesamo'`, `'moluscos'`, `'sulfitos'`). **Los valores actuales son de ejemplo/placeholder**,
+no confirmados por el restaurante — antes de dar por buena la carta en producción,
+sustituir por la lista real que facilite el restaurante. `Menu.jsx` los pinta como
+chips circulares (`bg-terra/15`, icono `text-terra`) junto al nombre del plato, vía
+`AllergenIcon.jsx` + `allergenCatalog`.
+
+## Roadmap de mejoras
+
+Documento con posibles mejoras pendientes (SEO, rendimiento, accesibilidad, negocio),
+priorizadas por esfuerzo: https://claude.ai/code/artifact/8b79585f-2a30-4eb3-a7c0-846956e3b41c
 
 ## Convenciones
 
@@ -58,6 +73,16 @@ para destacar platos en la UI. Al editar la carta, mantener esta forma de datos.
 - Textos de la carta y UI en español.
 - Los estilos van con clases de Tailwind directamente en el JSX; evitar CSS a medida
   salvo que Tailwind no lo resuelva bien (entonces va a `App.css`/`index.css`).
+- Color de marca: `terra` (`#C4522A`, `tailwind.config.js`). Todo hover/acento que deba
+  "combinar con la web" usa `text-terra` / `bg-terra` / `border-terra`, no otros colores.
+- Iconografía nueva (alérgenos, redes sociales) se hace en SVG inline monocromo
+  (`stroke="currentColor"`), no emoji ni librerías de iconos externas.
+
+## Pendiente de datos reales (placeholders)
+
+- `src/data/menu.js` → `allergens`: valores de ejemplo, pendientes de lista oficial del restaurante.
+- `src/components/Footer.jsx` → `INSTAGRAM_URL`: URL de Instagram genérica/placeholder,
+  pendiente de la cuenta real del restaurante.
 
 ## Carpeta `.claude/` (agentes, skills y comandos)
 
