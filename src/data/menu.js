@@ -1,5 +1,6 @@
 export const menuCategories = [
-  { key: 'buffet', label: 'Precios Buffet' },
+  { key: 'buffetAdultos', label: 'Buffet Adultos' },
+  { key: 'buffetInfantil', label: 'Buffet Infantil' },
   { key: 'entrantes', label: 'Entrantes' },
   { key: 'fritos', label: 'Fritos' },
   { key: 'dimsum', label: 'Dim Sum' },
@@ -23,13 +24,16 @@ export const menuCategories = [
 ];
 
 export const menuItems = {
-  buffet: [
+  buffetAdultos: [
     { name: 'Buffet Mediodia', desc: 'Precio por persona · Adultos · Mediodía', price: '19,5 €', badge: null },
-    { name: 'Buffet Mediodia Infantil', desc: 'Precio por persona · Niños · Mediodía', price: '11,95 €', badge: 'Niños' },
     { name: 'Buffet Noche', desc: 'Precio por persona · Adultos · Noche', price: '24,95 €', badge: null },
-    { name: 'Buffet Noche Infantil', desc: 'Precio por persona · Niños · Noche', price: '16,95 €', badge: 'Niños' },
     { name: 'Buffet Fin de Semana/festivos', desc: 'Precio por persona · Adultos · Fin de semana y festivos', price: '25,95 €', badge: null },
-    { name: 'Buffet Fin de Semana Infantil', desc: 'Precio por persona · Niños · Fin de semana y festivos', price: '17,95 €', badge: 'Niños' },
+  ],
+  buffetInfantil: [
+    { name: 'Niños 0-3 años', desc: 'Gratis', price: 'Gratis', badge: 'Niños' },
+    { name: 'Buffet Mediodia Infantil', desc: 'Precio por persona · Niños 4-12 años · Mediodía', price: '11,95 €', badge: 'Niños' },
+    { name: 'Buffet Noche Infantil', desc: 'Precio por persona · Niños 4-12 años · Noche', price: '16,95 €', badge: 'Niños' },
+    { name: 'Buffet Fin de Semana Infantil', desc: 'Precio por persona · Niños 4-12 años · Fin de semana y festivos', price: '17,95 €', badge: 'Niños' },
   ],
   entrantes: [
     { name: 'Sopa Miso', desc: '', price: 'Incluido', badge: 'Buffet', allergens: ['soja', 'gluten'] },
@@ -114,8 +118,8 @@ export const menuItems = {
     { name: 'Black Tuna Tartar 1u', desc: '', price: 'Incluido', badge: 'Buffet', allergens: ['pescado', 'soja', 'sesamo'] },
   ],
   nigiri: [
-    { name: 'Nigiri Sake 2u.', desc: '', price: 'Incluido', badge: 'Buffet', allergens: ['pescado'] },
-    { name: 'Nigiri Tuna 2u', desc: '', price: 'Incluido', badge: 'Buffet', allergens: ['pescado'] },
+    { name: 'Nigiri Sake 2u.', desc: '', price: 'Incluido', badge: 'Buffet', allergens: ['pescado'], image: 'nigiri-salmon.jpg' },
+    { name: 'Nigiri Tuna 2u', desc: '', price: 'Incluido', badge: 'Buffet', allergens: ['pescado'], image: 'nigiri-tuna-2u.jpg' },
     { name: 'Nigiri Ebi 2u', desc: '', price: 'Incluido', badge: 'Buffet', allergens: ['crustaceos'] },
     { name: 'Nigiri Fire Tuna 2u', desc: '', price: 'Incluido', badge: 'Buffet', allergens: ['pescado', 'soja'] },
     { name: 'Nigiri Fire Sake 2u', desc: '', price: 'Incluido', badge: 'Buffet', allergens: ['pescado', 'soja'] },

@@ -4,9 +4,20 @@ import { allergenCatalog } from '../data/allergens';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import AllergenIcon from './AllergenIcon';
 import bannerImg from '../assets/carpaccio.jpg';
+import nigiriSalmonImg from '../assets/nigiri-salmon.jpg';
+import nigiriTunaImg from '../assets/nigiri-tuna-2u.jpg';
 
+const dishImageByFilename = {
+  'nigiri-salmon.jpg': nigiriSalmonImg,
+  'nigiri-tuna-2u.jpg': nigiriTunaImg,
+};
 
-const GROUPS = menuCategories.map(c => ({ key: c.key, label: c.label, categories: [c.key] }));
+const GROUPS = [
+  { key: 'buffet', label: 'Precios Buffet', categories: ['buffetAdultos', 'buffetInfantil'] },
+  ...menuCategories
+    .filter(c => c.key !== 'buffetAdultos' && c.key !== 'buffetInfantil')
+    .map(c => ({ key: c.key, label: c.label, categories: [c.key] })),
+];
 
 const LABEL_BY_KEY = Object.fromEntries(menuCategories.map(c => [c.key, c.label]));
 
@@ -32,30 +43,50 @@ function AllergenIcons({ allergens }) {
   );
 }
 
-function MenuItem({ name, desc, price, badge, allergens, delay }) {
+function MenuItem({ name, desc, price, badge, allergens, image, delay }) {
   const ref = useScrollReveal();
+  const [showPhoto, setShowPhoto] = useState(false);
+  const photoUrl = image ? dishImageByFilename[image] : null;
+
   return (
     <div
       ref={ref}
-      className="reveal group flex justify-between items-start gap-3 md:gap-6 py-5
-        border-b border-white/6 hover:border-terra/40 transition-all duration-300 cursor-default"
+      className="reveal border-b border-white/6 hover:border-terra/40 transition-all duration-300"
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <div className="flex-1 min-w-0">
-        <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-1">
-          <p className="text-white font-medium text-sm tracking-wide group-hover:text-terra transition-colors duration-300">
-            {name}
-          </p>
-          {badge && (
-            <span className="text-terra border border-terra/40 text-[8px] font-bold tracking-[0.15em] uppercase px-1.5 py-0.5">
-              {badge}
-            </span>
-          )}
-          <AllergenIcons allergens={allergens} />
+      <div
+        className={`group flex justify-between items-start gap-3 md:gap-6 py-5 ${photoUrl ? 'cursor-pointer' : 'cursor-default'}`}
+        onClick={photoUrl ? () => setShowPhoto((v) => !v) : undefined}
+      >
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-1">
+            <p className="text-white font-medium text-sm tracking-wide group-hover:text-terra transition-colors duration-300">
+              {name}
+            </p>
+            {badge && (
+              <span className="text-terra border border-terra/40 text-[8px] font-bold tracking-[0.15em] uppercase px-1.5 py-0.5">
+                {badge}
+              </span>
+            )}
+            <AllergenIcons allergens={allergens} />
+            {photoUrl && <ChevronIcon open={showPhoto} />}
+          </div>
+          <p className="text-white/30 text-xs font-light leading-relaxed">{desc}</p>
         </div>
-        <p className="text-white/30 text-xs font-light leading-relaxed">{desc}</p>
+        <p className="text-terra font-semibold text-sm flex-shrink-0 tracking-wide">{price}</p>
       </div>
-      <p className="text-terra font-semibold text-sm flex-shrink-0 tracking-wide">{price}</p>
+
+      {photoUrl && (
+        <div className={`grid transition-all duration-500 ease-in-out ${showPhoto ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+          <div className="overflow-hidden">
+            <img
+              src={photoUrl}
+              alt={name}
+              className="w-full max-w-xs h-40 object-cover rounded-sm mb-5"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
