@@ -1,5 +1,4 @@
 // Catálogo alérgenos. icon = clave del set SVG monocromo en AllergenIcon.jsx
-// TODO: sustituir por lista definitiva cuando el restaurante la facilite.
 export const allergenCatalog = {
   gluten: { label: 'Gluten', icon: 'gluten' },
   crustaceos: { label: 'Crustáceos', icon: 'crustaceos' },
@@ -11,4 +10,7 @@ export const allergenCatalog = {
   sesamo: { label: 'Sésamo', icon: 'sesamo' },
   moluscos: { label: 'Moluscos', icon: 'moluscos' },
   sulfitos: { label: 'Sulfitos', icon: 'sulfitos' },
+  apio: { label: 'Apio', icon: 'apio' },
+  mostaza: { label: 'Mostaza', icon: 'mostaza' },
+  cacahuetes: { label: 'Cacahuetes', icon: 'cacahuetes' },
 };

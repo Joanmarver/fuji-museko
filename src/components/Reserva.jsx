@@ -3,9 +3,16 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import sushi3 from '../assets/sushi3.jpg';
 
 
-const WA_NUMBER  = '34600000000';
+const WA_NUMBER  = '34641298725';
 const WA_MESSAGE = encodeURIComponent('Hola, me gustaría reservar una mesa en Fuji Museko.');
 const WA_URL     = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
+
+const ADDRESS       = 'Av. Arcadi Garcia Sanz, 6, Vila-real, Castelló';
+const ADDRESS_SHORT = 'Av. Arcadi Garcia Sanz, 6';
+const GOOGLE_MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ADDRESS)}`;
+
+const PHONE      = '641 29 87 25';
+const PHONE_HREF = `tel:+34${PHONE.replace(/\s+/g, '')}`;
 
 function WhatsAppIcon() {
   return (
@@ -76,16 +83,32 @@ export default function Reserva() {
           </a>
         </div>
 
-        <div ref={infoRef} className="reveal mt-14 grid grid-cols-3 gap-2 sm:gap-4 border-t border-white/10 pt-10"
+        <div ref={infoRef} className="reveal mt-14 grid grid-cols-2 sm:grid-cols-4 gap-x-2 gap-y-6 sm:gap-4 border-t border-white/10 pt-10"
           style={{ transitionDelay: '0.5s' }}>
           {[
-            { label: 'Dirección', value: 'Villarreal, Castellón' },
-            { label: 'Horario',   value: '13–16:30 | 20-23h'     },
-            { label: 'Reservas',  value: 'WhatsApp'             },
-          ].map(({ label, value }) => (
+            {
+              label: 'Dirección',
+              value: ADDRESS_SHORT,
+              href: GOOGLE_MAPS_URL,
+            },
+            { label: 'Horario',  value: '13:00–16:30 | 20:00–23:00' },
+            { label: 'Teléfono', value: PHONE, href: PHONE_HREF },
+            { label: 'Reservas', value: 'WhatsApp' },
+          ].map(({ label, value, href }) => (
             <div key={label}>
               <p className="text-white/25 text-[9px] tracking-[0.25em] uppercase mb-2 font-medium">{label}</p>
-              <p className="text-white text-xs font-light">{value}</p>
+              {href ? (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white text-xs font-light hover:text-terra transition-colors duration-300"
+                >
+                  {value}
+                </a>
+              ) : (
+                <p className="text-white text-xs font-light">{value}</p>
+              )}
             </div>
           ))}
         </div>

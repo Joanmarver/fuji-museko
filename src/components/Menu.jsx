@@ -12,10 +12,20 @@ const dishImageByFilename = {
   'nigiri-tuna-2u.jpg': nigiriTunaImg,
 };
 
+const BUFFET_FOOD_KEYS = [
+  'entrantes', 'fritos', 'wok', 'plancha', 'brasa', 'sashimi', 'carpaccio',
+  'tartar', 'nigiri', 'gunkan', 'maki', 'uramaki', 'futomaki', 'temaki',
+];
+
+const BEBIDAS_POSTRES_KEYS = ['bebidas', 'cafes', 'postres', 'vinos', 'copas', 'cubatas'];
+
 const GROUPS = [
-  { key: 'buffet', label: 'Precios Buffet', categories: ['buffetAdultos', 'buffetInfantil'] },
+  { key: 'preciosBuffet', label: 'Precios Buffet', categories: ['buffetAdultos', 'buffetInfantil'] },
+  { key: 'buffet', label: 'Buffet', categories: BUFFET_FOOD_KEYS },
+  { key: 'bebidasPostres', label: 'Bebidas y Postres', categories: BEBIDAS_POSTRES_KEYS },
   ...menuCategories
-    .filter(c => c.key !== 'buffetAdultos' && c.key !== 'buffetInfantil')
+    .filter(c => c.key !== 'buffetAdultos' && c.key !== 'buffetInfantil'
+      && !BUFFET_FOOD_KEYS.includes(c.key) && !BEBIDAS_POSTRES_KEYS.includes(c.key))
     .map(c => ({ key: c.key, label: c.label, categories: [c.key] })),
 ];
 
@@ -43,7 +53,19 @@ function AllergenIcons({ allergens }) {
   );
 }
 
-function MenuItem({ name, desc, price, badge, allergens, image, delay }) {
+function SpicyChip() {
+  return (
+    <span
+      title="Picante"
+      aria-label="Picante"
+      className="flex items-center justify-center w-5 h-5 rounded-full bg-terra/15 text-terra"
+    >
+      <AllergenIcon name="picante" className="w-3.5 h-3.5" />
+    </span>
+  );
+}
+
+function MenuItem({ name, desc, price, badge, allergens, spicy, image, delay }) {
   const ref = useScrollReveal();
   const [showPhoto, setShowPhoto] = useState(false);
   const photoUrl = image ? dishImageByFilename[image] : null;
@@ -69,6 +91,7 @@ function MenuItem({ name, desc, price, badge, allergens, image, delay }) {
               </span>
             )}
             <AllergenIcons allergens={allergens} />
+            {spicy && <SpicyChip />}
             {photoUrl && <ChevronIcon open={showPhoto} />}
           </div>
           <p className="text-white/30 text-xs font-light leading-relaxed">{desc}</p>
@@ -103,6 +126,29 @@ function ChevronIcon({ open }) {
   );
 }
 
+function SubAccordion({ label, items }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-b border-white/6 last:border-b-0">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className={`w-full flex items-center justify-between py-3 text-left transition-colors duration-300
+          ${open ? 'text-terra' : 'text-terra/70 hover:text-terra'}`}
+      >
+        <span className="text-[10px] font-semibold tracking-[0.3em] uppercase">{label}</span>
+        <ChevronIcon open={open} />
+      </button>
+      <div className={`grid transition-all duration-500 ease-in-out ${open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+        <div className="overflow-hidden">
+          {items.map((item, i) => (
+            <MenuItem key={i} {...item} delay={i * 40} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function GroupAccordion({ group, open, onToggle }) {
   return (
     <div className="border-b border-white/8">
@@ -118,18 +164,17 @@ function GroupAccordion({ group, open, onToggle }) {
       <div className={`grid transition-all duration-500 ease-in-out ${open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
         <div className="overflow-hidden">
           <div className="pb-8">
-            {group.categories.map((catKey) => (
-              <div key={catKey} className="mb-8 last:mb-0">
-                {group.categories.length > 1 && (
-                  <p className="text-terra text-[10px] font-semibold tracking-[0.3em] uppercase mb-2">
-                    {LABEL_BY_KEY[catKey]}
-                  </p>
-                )}
-                {menuItems[catKey].map((item, i) => (
-                  <MenuItem key={`${catKey}-${i}`} {...item} delay={i * 40} />
+            {group.categories.length > 1
+              ? group.categories.map((catKey) => (
+                  <SubAccordion key={catKey} label={LABEL_BY_KEY[catKey]} items={menuItems[catKey]} />
+                ))
+              : group.categories.map((catKey) => (
+                  <div key={catKey}>
+                    {menuItems[catKey].map((item, i) => (
+                      <MenuItem key={`${catKey}-${i}`} {...item} delay={i * 40} />
+                    ))}
+                  </div>
                 ))}
-              </div>
-            ))}
           </div>
         </div>
       </div>
