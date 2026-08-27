@@ -27,11 +27,19 @@ export default function Hero() {
     return () => clearInterval(timer);
   }, []);
 
-  // Parallax
+  // Parallax (throttled con rAF para evitar jank/reflow en scroll de móvil)
   useEffect(() => {
-    const onScroll = () => {
+    let ticking = false;
+    const apply = () => {
+      ticking = false;
       if (bgRef.current) {
         bgRef.current.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+      }
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(apply);
       }
     };
     window.addEventListener('scroll', onScroll, { passive: true });

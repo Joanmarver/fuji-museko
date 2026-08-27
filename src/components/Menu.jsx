@@ -188,13 +188,21 @@ export default function Menu() {
   const titleRef  = useScrollReveal();
   const tabsRef   = useScrollReveal({ threshold: 0.2 });
 
-  // Parallax en el banner del menú
+  // Parallax en el banner del menú (throttled con rAF para evitar jank/reflow en scroll de móvil)
   useEffect(() => {
-    const onScroll = () => {
+    let ticking = false;
+    const apply = () => {
+      ticking = false;
       if (bannerRef.current) {
         const rect = bannerRef.current.getBoundingClientRect();
         const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * 0.2;
         bannerRef.current.querySelector('img').style.transform = `translateY(${offset}px)`;
+      }
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(apply);
       }
     };
     window.addEventListener('scroll', onScroll, { passive: true });

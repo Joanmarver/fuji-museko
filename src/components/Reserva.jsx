@@ -30,13 +30,21 @@ export default function Reserva() {
   const btnRef     = useScrollReveal({ threshold: 0.2 });
   const infoRef    = useScrollReveal({ threshold: 0.2 });
 
-  // Parallax
+  // Parallax (throttled con rAF para evitar jank/reflow en scroll de móvil)
   useEffect(() => {
-    const onScroll = () => {
+    let ticking = false;
+    const apply = () => {
+      ticking = false;
       if (bgRef.current) {
         const rect  = bgRef.current.getBoundingClientRect();
         const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * 0.25;
         bgRef.current.querySelector('img').style.transform = `translateY(${offset}px)`;
+      }
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(apply);
       }
     };
     window.addEventListener('scroll', onScroll, { passive: true });
