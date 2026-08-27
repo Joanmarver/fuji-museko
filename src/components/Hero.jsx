@@ -49,7 +49,7 @@ export default function Hero() {
   const go = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
   return (
-    <section className="relative h-dvh flex items-center justify-center overflow-hidden">
+    <section className="relative h-svh flex items-center justify-center overflow-hidden">
 
       {/* Todas las imágenes apiladas — sólo la activa tiene opacity 1 */}
       <div ref={bgRef} className="absolute inset-0 scale-110 will-change-transform">

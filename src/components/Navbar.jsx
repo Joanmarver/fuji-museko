@@ -7,9 +7,19 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 80);
-    window.addEventListener('scroll', fn);
-    return () => window.removeEventListener('scroll', fn);
+    let ticking = false;
+    const fn = () => {
+      ticking = false;
+      setScrolled(window.scrollY > 80);
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(fn);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   // Muestra el logo del navbar justo cuando el logo del Hero deja de verse (sin hueco entre ambos)
