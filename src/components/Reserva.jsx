@@ -44,7 +44,7 @@ export default function Reserva() {
   }, []);
 
   return (
-    <section id="reserva" ref={bgRef} className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section id="reserva" ref={bgRef} className="relative h-dvh flex items-center justify-center overflow-hidden">
 
       <img src={sushi3} alt="" className="absolute inset-0 w-full h-full object-cover scale-110 will-change-transform" />
       <div className="absolute inset-0 bg-black/68" />
