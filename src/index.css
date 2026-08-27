@@ -39,3 +39,16 @@ body {
 
 .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Secciones a pantalla completa (Hero, Reserva). 100vh como fallback: si el
+   navegador no soporta 100svh, la declaración svh se ignora entera y sin un
+   valor previo la sección quedaría con height:auto (colapsada, ya que sus
+   hijos son absolute y no aportan altura), lo que en algunos navegadores
+   (Opera iOS) se ve como que las imágenes de fondo cambian de tamaño al
+   hacer scroll. Con el fallback siempre hay una altura fija válida. */
+.full-viewport {
+  height: 100vh;
+}
+@supports (height: 100svh) {
+  .full-viewport { height: 100svh; }
+}
