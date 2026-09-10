@@ -4,13 +4,6 @@ import { allergenCatalog } from '../data/allergens';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import AllergenIcon from './AllergenIcon';
 import bannerImg from '../assets/carpaccio.jpg';
-import nigiriSalmonImg from '../assets/nigiri-salmon.jpg';
-import nigiriTunaImg from '../assets/nigiri-tuna-2u.jpg';
-
-const dishImageByFilename = {
-  'nigiri-salmon.jpg': nigiriSalmonImg,
-  'nigiri-tuna-2u.jpg': nigiriTunaImg,
-};
 
 const BUFFET_FOOD_KEYS = [
   'entrantes', 'fritos', 'wok', 'plancha', 'brasa', 'sashimi', 'carpaccio',
@@ -31,6 +24,43 @@ const GROUPS = [
 
 const LABEL_BY_KEY = Object.fromEntries(menuCategories.map(c => [c.key, c.label]));
 
+function IconChip({ iconName, label, backgroundColor, textColor }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDocClick = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener('click', onDocClick);
+    return () => document.removeEventListener('click', onDocClick);
+  }, [open]);
+
+  return (
+    <span
+      ref={ref}
+      aria-label={label}
+      className="relative flex items-center justify-center w-5 h-5 rounded-full cursor-pointer"
+      style={{ backgroundColor, color: textColor }}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      onClick={(e) => { e.stopPropagation(); setOpen((v) => !v); }}
+    >
+      <AllergenIcon name={iconName} className="w-3.5 h-3.5" />
+      <span
+        role="tooltip"
+        className={`absolute top-full mt-1.5 left-1/2 -translate-x-1/2 whitespace-nowrap
+          bg-black text-white text-[9px] font-semibold tracking-wide px-2 py-1 rounded-sm
+          shadow-lg shadow-black/40 z-20 transition-opacity duration-150
+          ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+      >
+        {label}
+      </span>
+    </span>
+  );
+}
+
 function AllergenIcons({ allergens }) {
   if (!allergens || allergens.length === 0) return null;
   return (
@@ -39,14 +69,13 @@ function AllergenIcons({ allergens }) {
         const info = allergenCatalog[key];
         if (!info) return null;
         return (
-          <span
+          <IconChip
             key={key}
-            title={info.label}
-            aria-label={info.label}
-            className="flex items-center justify-center w-5 h-5 rounded-full bg-terra/15 text-terra"
-          >
-            <AllergenIcon name={info.icon} className="w-3.5 h-3.5" />
-          </span>
+            iconName={info.icon}
+            label={info.label}
+            backgroundColor={`${info.color}26`}
+            textColor={info.color}
+          />
         );
       })}
     </span>
@@ -55,20 +84,12 @@ function AllergenIcons({ allergens }) {
 
 function SpicyChip() {
   return (
-    <span
-      title="Picante"
-      aria-label="Picante"
-      className="flex items-center justify-center w-5 h-5 rounded-full bg-terra/15 text-terra"
-    >
-      <AllergenIcon name="picante" className="w-3.5 h-3.5" />
-    </span>
+    <IconChip iconName="picante" label="Picante" backgroundColor="rgba(196,82,42,0.15)" textColor="#C4522A" />
   );
 }
 
-function MenuItem({ name, desc, price, badge, allergens, spicy, image, delay }) {
+function MenuItem({ name, desc, price, badge, allergens, spicy, delay }) {
   const ref = useScrollReveal();
-  const [showPhoto, setShowPhoto] = useState(false);
-  const photoUrl = image ? dishImageByFilename[image] : null;
 
   return (
     <div
@@ -76,10 +97,7 @@ function MenuItem({ name, desc, price, badge, allergens, spicy, image, delay }) 
       className="reveal border-b border-white/6 hover:border-terra/40 transition-all duration-300"
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <div
-        className={`group flex justify-between items-start gap-3 md:gap-6 py-5 ${photoUrl ? 'cursor-pointer' : 'cursor-default'}`}
-        onClick={photoUrl ? () => setShowPhoto((v) => !v) : undefined}
-      >
+      <div className="group flex justify-between items-start gap-3 md:gap-6 py-5">
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-1">
             <p className="text-white font-medium text-sm tracking-wide group-hover:text-terra transition-colors duration-300">
@@ -92,24 +110,11 @@ function MenuItem({ name, desc, price, badge, allergens, spicy, image, delay }) 
             )}
             <AllergenIcons allergens={allergens} />
             {spicy && <SpicyChip />}
-            {photoUrl && <ChevronIcon open={showPhoto} />}
           </div>
           <p className="text-white/30 text-xs font-light leading-relaxed">{desc}</p>
         </div>
         <p className="text-terra font-semibold text-sm flex-shrink-0 tracking-wide">{price}</p>
       </div>
-
-      {photoUrl && (
-        <div className={`grid transition-all duration-500 ease-in-out ${showPhoto ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
-          <div className="overflow-hidden">
-            <img
-              src={photoUrl}
-              alt={name}
-              className="w-full max-w-xs h-40 object-cover rounded-sm mb-5"
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

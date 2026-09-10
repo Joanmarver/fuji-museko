@@ -7,9 +7,8 @@ const WA_NUMBER  = '34641298725';
 const WA_MESSAGE = encodeURIComponent('Hola, me gustaría reservar una mesa en Fuji Museko.');
 const WA_URL     = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 
-const ADDRESS       = 'Av. Arcadi Garcia Sanz, 6, Vila-real, Castelló';
 const ADDRESS_SHORT = 'Av. Arcadi Garcia Sanz, 6';
-const GOOGLE_MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ADDRESS)}`;
+const GOOGLE_MAPS_URL = 'https://www.google.es/maps/place/Fuji+museko+vila+real/@39.9290076,-0.1087623,16z/data=!3m1!4b1!4m6!3m5!1s0xd6007007bdff6f3:0x2f5070e3f462a9fc!8m2!3d39.9290076!4d-0.1061874!16s%2Fg%2F11z0lblr1j?entry=ttu&g_ep=EgoyMDI2MDkwNi4wIKXMDSoASAFQAw%3D%3D';
 
 const PHONE      = '641 29 87 25';
 const PHONE_HREF = `tel:+34${PHONE.replace(/\s+/g, '')}`;
@@ -52,7 +51,7 @@ export default function Reserva() {
   }, []);
 
   return (
-    <section id="reserva" ref={bgRef} className="full-viewport relative flex items-center justify-center overflow-hidden">
+    <section id="reserva" ref={bgRef} className="min-viewport relative flex items-center justify-center overflow-hidden py-20">
 
       <img src={sushi3} alt="" className="absolute inset-0 w-full h-full object-cover scale-110 will-change-transform" />
       <div className="absolute inset-0 bg-black/68" />
@@ -91,34 +90,42 @@ export default function Reserva() {
           </a>
         </div>
 
-        <div ref={infoRef} className="reveal mt-14 grid grid-cols-2 sm:grid-cols-4 gap-x-2 gap-y-6 sm:gap-4 border-t border-white/10 pt-10"
-          style={{ transitionDelay: '0.5s' }}>
-          {[
-            {
-              label: 'Dirección',
-              value: ADDRESS_SHORT,
-              href: GOOGLE_MAPS_URL,
-            },
-            { label: 'Horario',  value: '13:00–16:30 | 20:00–23:00' },
-            { label: 'Teléfono', value: PHONE, href: PHONE_HREF },
-            { label: 'Reservas', value: 'WhatsApp' },
-          ].map(({ label, value, href }) => (
-            <div key={label}>
-              <p className="text-white/25 text-[9px] tracking-[0.25em] uppercase mb-2 font-medium">{label}</p>
-              {href ? (
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white text-xs font-light hover:text-terra transition-colors duration-300"
-                >
-                  {value}
-                </a>
-              ) : (
-                <p className="text-white text-xs font-light">{value}</p>
-              )}
-            </div>
-          ))}
+        <div ref={infoRef} className="reveal mt-14 border-t border-white/10 pt-10" style={{ transitionDelay: '0.5s' }}>
+          <div className="grid grid-cols-3 gap-x-2 gap-y-6">
+            {[
+              {
+                label: 'Dirección',
+                value: ADDRESS_SHORT,
+                href: GOOGLE_MAPS_URL,
+              },
+              { label: 'Teléfono', value: PHONE, href: PHONE_HREF },
+              { label: 'Reservas', value: 'WhatsApp' },
+            ].map(({ label, value, href }) => (
+              <div key={label}>
+                <p className="text-white/25 text-[9px] tracking-[0.25em] uppercase mb-2 font-medium">{label}</p>
+                {href ? (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white text-xs font-light hover:text-terra transition-colors duration-300"
+                  >
+                    {value}
+                  </a>
+                ) : (
+                  <p className="text-white text-xs font-light">{value}</p>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 pt-8 border-t border-white/10 text-center">
+            <p className="text-white text-base sm:text-lg font-bold uppercase tracking-[0.2em] mb-3">Horario</p>
+            <p className="text-white/70 text-sm sm:text-base font-light leading-relaxed">
+              Lunes a sábado: 13:00–16:00 y 20:30–23:30<br />
+              Domingo: 13:00–16:30 y 20:30–23:00
+            </p>
+          </div>
         </div>
       </div>
     </section>

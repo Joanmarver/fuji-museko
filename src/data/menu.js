@@ -83,7 +83,7 @@ export const menuItems = {
     { name: 'Huevo Roto Con Gamba Al Aljillo', desc: '', price: 'Incluido', badge: null, spicy: false, allergens: ['huevo', 'crustaceos', 'pescado'] },
     { name: 'Arroz Con Pollo', desc: '', price: 'Incluido', badge: null, spicy: false, allergens: ['gluten', 'huevo', 'sesamo'] },
     { name: 'Arroz Con Pollo Teriyaki', desc: '', price: 'Incluido', badge: null, spicy: false, allergens: ['gluten', 'soja', 'sesamo'] },
-    { name: 'Arroz Con Gamba Agripicante', desc: '', price: 'Incluido', badge: null, spicy: false, allergens: ['gluten', 'crustaceos', 'soja', 'sesamo'] },
+    { name: 'Arroz Con Gamba Agripicante', desc: '', price: 'Incluido', badge: null, spicy: true, allergens: ['gluten', 'crustaceos', 'soja', 'sesamo'] },
     { name: 'Arroz Con Ternera', desc: '', price: 'Incluido', badge: null, spicy: false, allergens: ['gluten', 'soja', 'sesamo'] },
   ],
   plancha: [
@@ -125,9 +125,9 @@ export const menuItems = {
     { name: 'Black Tuna Tartar', desc: '', price: 'Incluido', badge: null, spicy: true, allergens: ['gluten', 'huevo', 'pescado'] },
   ],
   nigiri: [
-    { name: 'Nigiri Sake', desc: '', price: 'Incluido', badge: null, spicy: false, allergens: ['pescado'], image: 'nigiri-salmon.jpg' },
+    { name: 'Nigiri Sake', desc: '', price: 'Incluido', badge: null, spicy: false, allergens: ['pescado'] },
     { name: 'Nigiri Fire Sake', desc: '', price: 'Incluido', badge: null, spicy: false, allergens: ['huevo', 'pescado', 'soja'] },
-    { name: 'Nigiri Tuna', desc: '', price: 'Incluido', badge: null, spicy: false, allergens: ['pescado'], image: 'nigiri-tuna-2u.jpg' },
+    { name: 'Nigiri Tuna', desc: '', price: 'Incluido', badge: null, spicy: false, allergens: ['pescado'] },
     { name: 'Nigiri Fire Tuna', desc: '', price: 'Incluido', badge: null, spicy: false, allergens: ['huevo', 'pescado', 'soja'] },
     { name: 'Nigiri Ebi', desc: '', price: 'Incluido', badge: null, spicy: false, allergens: ['crustaceos', 'soja'] },
     { name: 'Nigiri Unagi', desc: '', price: 'Incluido', badge: 'Noche · Finde · Festivo', spicy: false, allergens: ['pescado', 'soja'] },
