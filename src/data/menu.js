@@ -27,13 +27,13 @@ export const menuItems = {
   buffetAdultos: [
     { name: 'Buffet Mediodia', desc: 'Precio por persona · Adultos · Mediodía', price: '19,5 €', badge: null },
     { name: 'Buffet Noche', desc: 'Precio por persona · Adultos · Noche', price: '24,95 €', badge: null },
-    { name: 'Buffet Fin de Semana/festivos', desc: 'Precio por persona · Adultos · Fin de semana y festivos', price: '25,95 €', badge: null },
+    { name: 'Buffet Fin de Semana/Viernes Noche/Festivos', desc: 'Precio por persona · Adultos · Fin de semana, viernes noche y festivos', price: '25,95 €', badge: null },
   ],
   buffetInfantil: [
     { name: 'Niños 0-3 años', desc: 'Gratis', price: 'Gratis', badge: 'Niños' },
     { name: 'Buffet Mediodia Infantil', desc: 'Precio por persona · Niños 4-12 años · Mediodía', price: '11,95 €', badge: 'Niños' },
     { name: 'Buffet Noche Infantil', desc: 'Precio por persona · Niños 4-12 años · Noche', price: '16,95 €', badge: 'Niños' },
-    { name: 'Buffet Fin de Semana Infantil', desc: 'Precio por persona · Niños 4-12 años · Fin de semana y festivos', price: '17,95 €', badge: 'Niños' },
+    { name: 'Buffet Fin de Semana/Viernes Noche/Festivos Infantil', desc: 'Precio por persona · Niños 4-12 años · Fin de semana, viernes noche y festivos', price: '17,95 €', badge: 'Niños' },
   ],
   entrantes: [
     { name: 'Sopa Miso', desc: '', price: 'Incluido', badge: null, spicy: false, allergens: ['soja', 'crustaceos', 'pescado'] },
