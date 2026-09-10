@@ -25,9 +25,9 @@ export const menuCategories = [
 
 export const menuItems = {
   buffetAdultos: [
-    { name: 'Buffet Mediodia', desc: 'Precio por persona · Adultos · Mediodía', price: '19,5 €', badge: null },
-    { name: 'Buffet Noche', desc: 'Precio por persona · Adultos · Noche', price: '24,95 €', badge: null },
-    { name: 'Buffet Fin de Semana/Viernes Noche/Festivos', desc: 'Precio por persona · Adultos · Fin de semana, viernes noche y festivos', price: '25,95 €', badge: null },
+    { name: 'Buffet Mediodia', desc: 'Precio por persona · Adultos · Mediodía', price: '20,50 €', badge: null },
+    { name: 'Buffet Noche', desc: 'Precio por persona · Adultos · Noche', price: '26,95 €', badge: null },
+    { name: 'Buffet Fin de Semana/Viernes Noche/Festivos', desc: 'Precio por persona · Adultos · Fin de semana, viernes noche y festivos', price: '27,95 €', badge: null },
   ],
   buffetInfantil: [
     { name: 'Niños 0-3 años', desc: 'Gratis', price: 'Gratis', badge: 'Niños' },
