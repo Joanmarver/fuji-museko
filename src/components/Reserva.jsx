@@ -122,7 +122,7 @@ export default function Reserva() {
           <div className="mt-10 pt-8 border-t border-white/10 text-center">
             <p className="text-white text-base sm:text-lg font-bold uppercase tracking-[0.2em] mb-3">Horario</p>
             <p className="text-white/70 text-sm sm:text-base font-light leading-relaxed">
-              Lunes a sábado: 13:00–16:00 y 20:30–23:30<br />
+              Lunes a sábado: 13:00–16:30 y 20:30–23:30<br />
               Domingo: 13:00–16:30 y 20:30–23:00
             </p>
           </div>
