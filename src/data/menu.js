@@ -31,8 +31,8 @@ export const menuItems = {
   ],
   buffetInfantil: [
     { name: 'Niños 0-3 años', desc: 'Gratis', price: 'Gratis', badge: 'Niños' },
-    { name: 'Buffet Mediodia Infantil', desc: 'Precio por persona · Niños 4-12 años · Mediodía', price: '11,95 €', badge: 'Niños' },
-    { name: 'Buffet Noche Infantil', desc: 'Precio por persona · Niños 4-12 años · Noche', price: '16,95 €', badge: 'Niños' },
+    { name: 'Buffet Mediodia Infantil', desc: 'Precio por persona · Niños 4-8 años · Mediodía', price: '11,95 €', badge: 'Niños' },
+    { name: 'Buffet Noche Infantil', desc: 'Precio por persona · Niños 4-8 años · Noche', price: '16,95 €', badge: 'Niños' },
     { name: 'Buffet Fin de Semana/Viernes Noche/Festivos Infantil', desc: 'Precio por persona · Niños 4-12 años · Fin de semana, viernes noche y festivos', price: '17,95 €', badge: 'Niños' },
   ],
   entrantes: [
