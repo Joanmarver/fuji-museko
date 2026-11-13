@@ -3,7 +3,7 @@ import { menuCategories, menuItems } from '../data/menu';
 import { allergenCatalog } from '../data/allergens';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import AllergenIcon from './AllergenIcon';
-import bannerImg from '../assets/carpaccio.jpg';
+import bannerImg from '../assets/fotos/chef-nigiri.jpg';
 
 const BUFFET_FOOD_KEYS = [
   'entrantes', 'fritos', 'wok', 'plancha', 'brasa', 'sashimi', 'carpaccio',
@@ -218,10 +218,9 @@ export default function Menu() {
     <section id="menu" className="relative">
 
       {/* Banner con parallax */}
-      <div ref={bannerRef} className="relative h-56 md:h-72 overflow-hidden">
-        <img src={bannerImg} alt="Sushi" className="w-full h-full object-cover object-center scale-110 will-change-transform" />
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/50" />
+      <div ref={bannerRef} className="relative h-64 md:h-72 overflow-hidden">
+        <img src={bannerImg} alt="Chef preparando nigiri" className="w-full h-full object-cover object-[60%_35%] md:object-center scale-110 will-change-transform" />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
           <p className="text-terra text-[10px] font-semibold tracking-[0.45em] uppercase mb-3">Carta</p>
           <h2 className="text-white text-4xl md:text-6xl font-black tracking-tighter uppercase">Menú</h2>

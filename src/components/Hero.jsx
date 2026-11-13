@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import logo from '../assets/logo.jpg';
-import sushi3 from '../assets/sushi3.jpg';
-import platoEbi from '../assets/ebiGreen.jpg';
-import nigiri from '../assets/nigirituna.jpg';
-import sake from '../assets/sake.jpg';
-import sashimi from '../assets/sashimi.jpg';
-import carpaccio from '../assets/carpaccio.jpg';
-import takoyaki from '../assets/takoyaki.jpg';
-import magdalena from '../assets/magdalena.jpg';
+import rollsCrujientes from '../assets/fotos/rolls-crujientes.jpg';
+import chefNigiri from '../assets/fotos/chef-nigiri.jpg';
+import tacos from '../assets/fotos/tacos.jpg';
+import entrantes from '../assets/fotos/entrantes.jpg';
+import chefRoll from '../assets/fotos/chef-roll.jpg';
 
 
-const IMAGES      = [ platoEbi, nigiri, sushi3, sake, sashimi, carpaccio, takoyaki, magdalena];
+// src + punto focal (object-position) para que el recorte no corte el plato
+const IMAGES = [
+  { src: rollsCrujientes, pos: '50% 50%' },
+  { src: tacos,           pos: '50% 62%' },
+  { src: chefNigiri,      pos: '55% 50%' },
+  { src: entrantes,       pos: '50% 68%' },
+  { src: chefRoll,        pos: '40% 60%' },
+];
 const DISPLAY_TIME = 5000; // ms entre transiciones
 const FADE_TIME    = 2500; // ms de crossfade
 
@@ -53,13 +57,14 @@ export default function Hero() {
 
       {/* Todas las imágenes apiladas — sólo la activa tiene opacity 1 */}
       <div ref={bgRef} className="absolute inset-0 scale-110 will-change-transform">
-        {IMAGES.map((src, i) => (
+        {IMAGES.map(({ src, pos }, i) => (
           <img
             key={i}
             src={src}
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
             style={{
+              objectPosition: pos,
               opacity:    i === active ? 1 : 0,
               transition: `opacity ${FADE_TIME}ms ease-in-out`,
               zIndex:     i === active ? 1 : 0,
@@ -83,8 +88,8 @@ export default function Hero() {
         />
         <div className="fade-up w-8 h-px bg-terra mx-auto mb-6" style={{ animationDelay: '0.5s' }} />
         <p
-          className="fade-up text-white/45 text-[10px] font-light tracking-[0.5em] uppercase mb-10"
-          style={{ animationDelay: '0.65s' }}
+          className="fade-up text-white text-xs sm:text-sm font-medium tracking-[0.5em] uppercase mb-10"
+          style={{ animationDelay: '0.65s', textShadow: '0 1px 8px rgba(0,0,0,0.8)' }}
         >
           Sushi · Vila-real
         </p>

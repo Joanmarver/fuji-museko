@@ -1,6 +1,23 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import sushi3 from '../assets/sushi3.jpg';
+import fachada from '../assets/fotos/fachada.jpg';
+import sala from '../assets/fotos/sala.jpg';
+import salaCenital from '../assets/fotos/sala-cenital.jpg';
+import cocina from '../assets/fotos/cocina.jpg';
+import recepcion from '../assets/fotos/recepcion.jpg';
+import entradaPlantas from '../assets/fotos/entrada-plantas.jpg';
+
+// src + punto focal (object-position)
+const LOCAL_IMAGES = [
+  { src: sala,           pos: '50% 50%' },
+  { src: fachada,        pos: '50% 40%' },
+  { src: salaCenital,    pos: '50% 50%' },
+  { src: recepcion,      pos: '45% 60%' },
+  { src: cocina,         pos: '40% 50%' },
+  { src: entradaPlantas, pos: '60% 60%' },
+];
+const DISPLAY_TIME = 5000;
+const FADE_TIME    = 2500;
 
 
 const WA_NUMBER  = '34641298725';
@@ -23,7 +40,17 @@ function WhatsAppIcon() {
 
 export default function Reserva() {
   const bgRef      = useRef(null);
-  const titleRef   = useScrollReveal({ threshold: 0.2 });
+  const imgsRef    = useRef(null);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActive(a => (a + 1) % LOCAL_IMAGES.length);
+    }, DISPLAY_TIME + FADE_TIME);
+    return () => clearInterval(timer);
+  }, []);
+
+  const titleRef  = useScrollReveal({ threshold: 0.2 });
   const dividerRef = useScrollReveal({ threshold: 0.2 });
   const textRef    = useScrollReveal({ threshold: 0.2 });
   const btnRef     = useScrollReveal({ threshold: 0.2 });
@@ -34,10 +61,10 @@ export default function Reserva() {
     let ticking = false;
     const apply = () => {
       ticking = false;
-      if (bgRef.current) {
+      if (bgRef.current && imgsRef.current) {
         const rect  = bgRef.current.getBoundingClientRect();
         const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * 0.25;
-        bgRef.current.querySelector('img').style.transform = `translateY(${offset}px)`;
+        imgsRef.current.style.transform = `translateY(${offset}px)`;
       }
     };
     const onScroll = () => {
@@ -53,7 +80,22 @@ export default function Reserva() {
   return (
     <section id="reserva" ref={bgRef} className="min-viewport relative flex items-center justify-center overflow-hidden py-20">
 
-      <img src={sushi3} alt="" className="absolute inset-0 w-full h-full object-cover scale-110 will-change-transform" />
+      <div ref={imgsRef} className="absolute inset-0 scale-110 will-change-transform">
+        {LOCAL_IMAGES.map(({ src, pos }, i) => (
+          <img
+            key={i}
+            src={src}
+            alt=""
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{
+              objectPosition: pos,
+              opacity:    i === active ? 1 : 0,
+              transition: `opacity ${FADE_TIME}ms ease-in-out`,
+            }}
+          />
+        ))}
+      </div>
       <div className="absolute inset-0 bg-black/68" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black/60" />
 
